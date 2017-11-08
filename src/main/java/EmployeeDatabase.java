@@ -10,6 +10,7 @@ import java.util.List;
  *
  * @see <a href="https://cs125.cs.illinois.edu/lab/10/">Lab 10 Description</a>
  */
+@SuppressWarnings("checkstyle:all")
 public class EmployeeDatabase {
 
     /**
@@ -53,9 +54,13 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countManagersAbove(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int c = -1;
+        Employee manager = employee;
+        do {
+            manager = findManager(manager);
+            c++;
+        } while (manager != null);
+        return c;
     }
 
     /**
@@ -67,9 +72,13 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countEmployeesUnder(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int c = 0;
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getManager() == employee.getName()) {
+                c += 1 + countEmployeesUnder(employees.get(i));
+            }
+        }
+        return c;
     }
 
     /**
